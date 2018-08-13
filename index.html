@@ -10,6 +10,9 @@
         crossorigin="anonymous">
     <style>
         .container,
+        .col-md-4,
+        .col-xs-12,
+        .col,
         .card {
             padding: 10px
         }
@@ -26,20 +29,24 @@
     <style id="css"></style>
     <div id="writeEditoe" class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-md-4 col-xs-12">
                 <textarea id="htmlArea" class="form-control" placeholder="html"></textarea>
             </div>
-            <div class="col">
+            <div class="col-md-4 col-xs-12">
                 <textarea id="cssArea" class="form-control" placeholder="css"></textarea>
             </div>
-            <div class="col">
+            <div class="col-md-4 col-xs-12">
                 <textarea id="jsArea" class="form-control" placeholder="js"></textarea>
             </div>
         </div>
     </div>
     <div id="showEditor" class="container">
-        <div class="card">
-            <div id="html">这里是显示效果</div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div id="html">这里是显示效果</div>
+                </div>
+            </div>
         </div>
     </div>
     <script id="js"></script>
@@ -49,6 +56,7 @@
             addDomListener($('#cssArea'))
             addDomListener($('#jsArea'))
         }
+
         function $(dom) {
             return document.querySelector(dom)
         }
@@ -62,7 +70,7 @@
                     var val = this.value,
                         start = this.selectionStart,
                         end = this.selectionEnd;
-                    this.value = val.substring(0, start) +' '+ val.substring(end);
+                    this.value = val.substring(0, start) + ' ' + val.substring(end);
                     this.selectionStart = this.selectionEnd = start + 1;
                     e.preventDefault()
 
