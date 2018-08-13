@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        .container,
+        .card {
+            padding: 10px
+        }
+
+        textarea {
+            width: 100%;
+            height: 36vh
+        }
+    </style>
+</head>
+
+<body>
+    <style id="css"></style>
+    <div id="writeEditoe" class="container">
+        <div class="row">
+            <div class="col">
+                <textarea id="htmlArea" class="form-control" placeholder="html"></textarea>
+            </div>
+            <div class="col">
+                <textarea id="cssArea" class="form-control" placeholder="css"></textarea>
+            </div>
+            <div class="col">
+                <textarea id="jsArea" class="form-control" placeholder="js"></textarea>
+            </div>
+        </div>
+    </div>
+    <div id="showEditor" class="container">
+        <div class="card">
+            <div id="html">这里是显示效果</div>
+        </div>
+    </div>
+    <script id="js"></script>
+    <script>
+        window.onload = function () {
+            addDomListener($('#htmlArea'))
+            addDomListener($('#cssArea'))
+            addDomListener($('#jsArea'))
+        }
+        function $(dom) {
+            return document.querySelector(dom)
+        }
+
+        function addDomListener(dom) {
+            dom.addEventListener('input', function (e) {
+                innerValue()
+            })
+            dom.addEventListener('keydown', function (e) {
+                if (e.keyCode === 9) {
+                    var val = this.value,
+                        start = this.selectionStart,
+                        end = this.selectionEnd;
+                    this.value = val.substring(0, start) + '\t' + val.substring(end);
+                    this.selectionStart = this.selectionEnd = start + 1;
+                    e.preventDefault()
+
+                }
+            })
+        }
+
+        function innerValue() {
+            $('#html').innerHTML = $("#htmlArea").value
+            $('#css').innerText = $("#cssArea").value
+            $('#js').innerText = $("#jsArea").value
+        }
+    </script>
+</body>
+
+</html>
