@@ -22,6 +22,12 @@
             height: 36vh;
             font-family: Courier, monospace
         }
+
+        #runJS {
+            float: right;
+            margin-top: -32px;
+            z-index: 999
+        }
     </style>
 </head>
 
@@ -37,6 +43,7 @@
             </div>
             <div class="col-md-4 col-xs-12">
                 <textarea id="jsArea" class="form-control" placeholder="js"></textarea>
+                <button id="runJS" class="btn btn-sm btn-primary">运行js</button>
             </div>
         </div>
     </div>
@@ -49,40 +56,60 @@
             </div>
         </div>
     </div>
-    <script id="js"></script>
     <script>
-        window.onload = function () {
-            addDomListener($('#htmlArea'))
-            addDomListener($('#cssArea'))
-            addDomListener($('#jsArea'))
-        }
+        (function () {
+            window.onload = function () {
+                addDomListener($('#htmlArea'), true)
+                addDomListener($('#cssArea'), true)
+                addDomListener($('#jsArea'), false)
+                $('#runJS').addEventListener('click', function () {
+                    let scriptStr = $("#jsArea").value
+                    delScript()
+                    addScript(scriptStr)
+                })
+            }
 
-        function $(dom) {
-            return document.querySelector(dom)
-        }
+            function $(dom) {
+                return document.querySelector(dom)
+            }
 
-        function addDomListener(dom) {
-            dom.addEventListener('input', function (e) {
-                innerValue()
-            })
-            dom.addEventListener('keydown', function (e) {
-                if (e.keyCode === 9) {
-                    var val = this.value,
-                        start = this.selectionStart,
-                        end = this.selectionEnd;
-                    this.value = val.substring(0, start) + ' ' + val.substring(end);
-                    this.selectionStart = this.selectionEnd = start + 1;
-                    e.preventDefault()
+            function addScript(value) {
+                var para = document.createElement("script");
+                var node = document.createTextNode(value);
+                para.appendChild(node);
+                para.id = "js"
+                $('body').appendChild(para);
+            }
 
+            function delScript() {
+                if ($('#js')) {
+                    $('body').removeChild($("#js"))
                 }
-            })
-        }
+            }
 
-        function innerValue() {
-            $('#html').innerHTML = $("#htmlArea").value
-            $('#css').innerText = $("#cssArea").value
-            $('#js').innerText = $("#jsArea").value
-        }
+            function addDomListener(dom, needListenInput) {
+                if (needListenInput) {
+                    dom.addEventListener('input', function (e) {
+                        innerValue()
+                    })
+                }
+                dom.addEventListener('keydown', function (e) {
+                    if (e.keyCode === 9) {
+                        var val = this.value,
+                            start = this.selectionStart,
+                            end = this.selectionEnd;
+                        this.value = val.substring(0, start) + ' ' + val.substring(end);
+                        this.selectionStart = this.selectionEnd = start + 1;
+                        e.preventDefault()
+                    }
+                })
+            }
+
+            function innerValue(dom) {
+                $('#html').innerHTML = $("#htmlArea").value
+                $('#css').innerText = $("#cssArea").value
+            }
+        })()
     </script>
 </body>
 
