@@ -16,7 +16,8 @@
 
         textarea {
             width: 100%;
-            height: 36vh
+            height: 36vh;
+            font-family: Courier, monospace
         }
     </style>
 </head>
@@ -61,7 +62,7 @@
                     var val = this.value,
                         start = this.selectionStart,
                         end = this.selectionEnd;
-                    this.value = val.substring(0, start) + '\t' + val.substring(end);
+                    this.value = val.substring(0, start) +' '+ val.substring(end);
                     this.selectionStart = this.selectionEnd = start + 1;
                     e.preventDefault()
 
